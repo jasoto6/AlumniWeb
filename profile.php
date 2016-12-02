@@ -3,10 +3,16 @@
 
   if (!$loggedin) die();
 
+  if (isset($_POST['privacy']) && isset($_SESSION['user']))
+  {
+    $GraduationYearPri = $_POST['GraduationYearPri'];
+    queryMysql("UPDATE profiles SET GraduationYearPri=$GraduationYearPri where user='$user'");
+  }
+
   echo "<div class='main'><h3>Your Profile</h3>";
 
   $result = queryMysql("SELECT * FROM profiles WHERE user='$user'");
-    
+
   if (isset($_POST['text']))
   {
     $text = sanitizeString($_POST['text']);
@@ -18,16 +24,70 @@
   }
   else
   {
-    if ($result->num_rows)
+    //if ($result->num_rows)
+    //{
+    $rows = $result -> num_rows;
+    for ($j=0; $j <$rows; ++$j)
     {
-      $row  = $result->fetch_array(MYSQLI_ASSOC);
-      $text = stripslashes($row['text']);
+      //$result -> data_seek($j);
+      $row = $result->fetch_array(MYSQLI_NUM);
     }
-    else $text = "";
+
+      //$text = stripslashes($rows['text']);
+      echo <<<_END
+      <form method='post' action='profile.php'>
+_END;
+      echo $row[0]."<br>";
+      echo $row[1]."<br>";
+      echo $row[2]."<br>";
+      echo $row[3]."<br>";
+      echo $row[4]."<br>";
+      echo $row[5]."<br>";
+      echo $row[6]."<br>";
+      echo $row[7];
+      echo <<<_END
+      Public<input type='radio' name='LastName' value='0' checked='checked'>
+      Private<input type='radio' name='LastName' value='1' >
+      <br>
+      <br>
+_END;
+      if ($row[11]) {
+        echo $row[8];
+        echo <<<_END
+        Public<input type='radio' name='GraduationYearPri' value='0'>
+        Private<input type='radio' name='GraduationYearPri' value='1' checked='checked'>
+        <br>
+_END;
+      } else {
+        echo $row[8];
+        echo <<<_END
+        Public<input type='radio' name='GraduationYearPri' value='0' checked='checked'>
+        Private<input type='radio' name='GraduationYearPri' value='1' >
+        <br>
+_END;
+      }
+
+      echo $row[9]."<br>";
+      echo $row[10]."<br>";
+      echo <<<_END
+      <input type='hidden' name='privacy' value='1'>
+      <input type='submit' value='Save'></form><br>
+      </div><br>
+    </body>
+  </html>
+_END;
+
+      //$row  = $result->fetch_array(MYSQLI_ASSOC);
+      //$text = stripslashes($row['text']);
+    //}
+    //else $text = "";
   }
 
-  $text = stripslashes(preg_replace('/\s\s+/', ' ', $text));
+  //$text = stripslashes(preg_replace('/\s\s+/', ' ', $text));
 
+
+
+/*
   if (isset($_FILES['image']['name']))
   {
     $saveto = "$user.jpg";
@@ -76,7 +136,7 @@
     }
   }
 
-  showProfile($user);
+  //showProfile($user);
 
   echo <<<_END
     <form method='post' action='profile.php' enctype='multipart/form-data'>
@@ -88,5 +148,9 @@ _END;
     Image: <input type='file' name='image' size='14'>
     <input type='submit' value='Save Profile'>
     </form></div><br>
+
   </body>
+
+
 </html>
+*/

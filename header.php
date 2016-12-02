@@ -19,8 +19,7 @@
        "href='styles.css' type='text/css'>"                     .
        "</head><body> "  .
        "<image src='images/UTEPAlumniBanner.jpg'> " .
-       "<div class='appname'>$appname$userstr</div>"            .
-       "<script src='javascript.js'></script>";
+       "<div class='appname'>$appname$userstr</div>";
 
   if ($loggedin)
   {

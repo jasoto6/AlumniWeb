@@ -1,9 +1,9 @@
-<?php //functions.php
-  $dbhost  = 'localhost';    
-  $dbname  = 'Alumni';   
-  $dbuser  = 'root';   
-  $dbpass  = '205cuPA!';   
-  $appname = "University of Texas El Paso (UTEP) Alumni"; 
+<?php // Example 26-1: functions.php
+  $dbhost  = 'localhost';    // Unlikely to require changing
+  $dbname  = 'final';   // Modify these...
+  $dbuser  = 'root';   // ...variables according
+  $dbpass  = '';   // ...to your installation
+  $appname = "UTEP Alumni Association"; // ...and preference
 
   $connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
   if ($connection->connect_error) die($connection->connect_error);
