@@ -39,11 +39,17 @@
 _END;
       echo $row[0]."<br>";
       echo $row[1]."<br>";
-      echo $row[2]."<br>";
+      echo <<<_END
+      <input type='text' maxlength='500' size='40' name='BriefBio' value='$row[2]'>
+      <br>
+_END;
       echo $row[3]."<br>";
       echo $row[4]."<br>";
-      echo $row[5]."<br>";
-      echo $row[6]."<br>";
+      echo <<<_END
+      <input type='text' maxlength='13' size='40' name='Phoneno' value='$row[5]'>
+      <br>
+_END;
+      echo $row[6]." ";
       echo $row[7];
       echo <<<_END
       Public<input type='radio' name='LastName' value='0' checked='checked'>
@@ -68,8 +74,11 @@ _END;
       }
 
       echo $row[9]."<br>";
-      echo $row[10]."<br>";
       echo <<<_END
+      <input type='text' size='40' name='Email' value='$row[10]'>
+      Public<input type='radio' name='EmailPri' value='0' checked='checked'>
+      Private<input type='radio' name='EmailPri' value='1' >
+      <br>
       <input type='hidden' name='privacy' value='1'>
       <input type='submit' value='Save'></form><br>
       </div><br>
