@@ -6,36 +6,54 @@
 }
 
 body {
-  width     :700px;
-  margin    :20px auto;
-  background:#f8f8f8;
-  border    :1px solid #888;
+  width     :100%;
+  height: 100%;
+  margin    :auto;
+  background:#042e5e;
+  /*border    :1px solid #888;*/
 }
 
 html {
   background:#fff
+  height: 100%;
+  width:100%;
 }
 
 img {
-  border            :1px solid black;
-  margin-right      :15px;
-  -moz-box-shadow   :2px 2px 2px #888;
+  width: 100%;
+  height: auto;
+  /*border            :1px solid black;*/
+  /*margin-right      :15px;*/
+  /*-moz-box-shadow   :2px 2px 2px #888;
   -webkit-box-shadow:2px 2px 2px #888;
-  box-shadow        :2px 2px 2px #888;
+  box-shadow        :2px 2px 2px #888;*/
 }
+
+/*#logo {
+  width: 100%;
+  height: 10%;
+}*/
 
 li a, .button {
   text-decoration:none;
+  background-color: rgb(223, 132, 25)
 }
 
 li a:hover, .button:hover {
-  color:green;
+  background-color: #042e5e;
+  color:white;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
- 
+
+a:link, a:visited {
+    color: white;
+}
+
 .appname {
-  text-align :center;
-  background :#eb8;
-  color      :#40d;
+  text-align :right;
+  background :#e67e16;
+  color      :white;
   font-family:helvetica;
   font-size  :20pt;
   padding    :4px;
@@ -61,18 +79,28 @@ li a:hover, .button:hover {
 .menu li, .button {
   display           :inline;
   padding           :4px 6px;
-  border            :1px solid #777;
-  background        :#ddd;
-	color             :#d04;
+  background        :#e67e16;
+	color             :white;
   margin-right      :8px;
-	border-radius     :5px;
-	-moz-box-shadow   :2px 2px 2px #888;
-	-webkit-box-shadow:2px 2px 2px #888;
-	box-shadow        :2px 2px 2px #888;
+
 }
+
+.button hover{
+  background-color: #042e5e;
+  color:white;
+}
+
+.menu, ul{
+  background-color: #e67e16;
+  margin: 0;
+  padding: 5px;
+  width: 100%;
+}
+
 
 .subhead {
   font-weight:bold;
+  background-color: #e67e16;
 }
 
 .taken, .error {
@@ -89,8 +117,56 @@ li a:hover, .button:hover {
 }
 
 #logo {
-  font-family:Georgia;
-  font-weight:bold;
-  font-style:italic;
-  font-size :97px;
+  width: 100%;
+/*width: 75%;
+height: 15%;*/
+}
+
+#table {
+  border-collapse: collapse;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  background-color: white;
+  color: black;
+}
+
+th, td {
+  padding: 5px;
+}
+
+th{
+  background-color: white;
+  color: black;
+}
+
+tr :hover{
+  background-color: rgb(246, 184, 90);
+}
+
+tr:nth-child(even) {
+  background-color: rgb(195, 218, 228);
+}
+
+#filters {
+  background-color: #e67e16;
+  color: white;
+  position: relative;
+  width: 100%;
+
+}
+
+#pageNo {
+position: static;
+margin-left: auto;
+margin-right: auto;
+}
+
+#welcome {
+  width: 100%;
+  color: white;
+  text-align: center;
+  /*margin-left: auto;*/
+  margin-right: auto;
 }
