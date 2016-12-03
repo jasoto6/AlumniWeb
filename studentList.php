@@ -1,12 +1,12 @@
 <?php
 require_once 'header.php';
 require_once 'functions.php';
-require_once 'database.php';
+// require_once 'database.php';
 $filterLevel="";
 $message = "";
 
-//$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-$conn = new mysqli($hn, $un, $pw, $db);
+$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+// $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) {
      die("Connection failed: " . $conn->connect_error);
 }
@@ -44,6 +44,7 @@ $result = $conn->query($query);
 
   echo <<<_END
      <br>
+     <div id="sort-filter">
      <div id='sorting'>
        <form action="studentList.php" method="post">
        Sorting Options:
@@ -65,8 +66,10 @@ $result = $conn->query($query);
        </select>
      <!-- </form> -->
      <!-- <form> -->
-       <input type="submit" value="Filter">
+
      </form>
+     </div>
+     <input type="submit" value="Filter" class="filterButton">
      </div>
 _END;
   echo "<div id=data overflow-x:auto><h2 id='alumniHeader'>Alumni List</h2><table id='table' border='1'>

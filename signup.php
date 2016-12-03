@@ -41,7 +41,7 @@
       return request
     }
   </script>
-  <div class='main'><h3>Please enter your details to sign up</h3>
+  <div class='main'><h3>Please enter your details to <em>Sign up</em></h3>
 _END;
 
   $error = $user = $pass = "";
@@ -69,18 +69,20 @@ _END;
   }
 
   echo <<<_END
+    <div id="signupForm">
     <form method='post' action='signup.php'>$error
-    <span class='fieldname'>Username</span>
+    <span class='fieldname' class="usernameField" style="color:white;">Username</span>
     <input type='text' maxlength='16' name='user' value='$user'
       onBlur='checkUser(this)'><span id='info'></span><br>
-    <span class='fieldname'>Password</span>
+    <span class='fieldname' class="passwordField" style="color:white;">Password</span>
     <input type='text' maxlength='16' name='pass'
       value='$pass'><br>
+
 _END;
 ?>
 
     <span class='fieldname'>&nbsp;</span>
-    <input type='submit' value='Sign up'>
-    </form></div><br>
+    <input type='submit' value='Sign up' class="submitButton" id="signupSubmit">
+    </form></div></div><br>
   </body>
 </html>
