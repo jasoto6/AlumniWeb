@@ -1,21 +1,24 @@
 <?php
 require_once 'header.php';
 require_once 'functions.php';
+require_once 'database.php';
 $filterLevel="";
 $message = "";
 
-$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+//$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+$conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) {
      die("Connection failed: " . $conn->connect_error);
 }
-$query ="SELECT * FROM cs5339team14fa16.ALUMNI ORDER BY LastName";
+$query ="SELECT * FROM ALUMNI ORDER BY LastName";
+//$query ="SELECT * FROM cs5339team14fa16.ALUMNI ORDER BY LastName";
 
 
 if(isset($_POST['students'])){
   $filterLevel = $_POST['students'];
   $message = $filterLevel;
-  if ($filterLevel != 'all') $query="SELECT * FROM cs5339team14fa16.ALUMNI WHERE LevelCode = '$filterLevel' ORDER BY LastName";
-  else $query ="SELECT * FROM cs5339team14fa16.ALUMNI ORDER BY LastName";
+  if ($filterLevel != 'all') $query="SELECT * FROM ALUMNI WHERE LevelCode = '$filterLevel' ORDER BY LastName";
+  else $query ="SELECT * FROM ALUMNI ORDER BY LastName";
 }
 // if (isset($_POST['filter_level' == 'undergrad' && $_POST['filter_sort'] == 'alphabet']) ){
 
@@ -37,6 +40,33 @@ $result = $conn->query($query);
 //   if ($_GET['sorting'] == 'degree') $result. = "ORDER BY Degree");
 // }
 
+  echo <<<_END
+     <br>
+     <div id='sorting'>
+       <form action="studentList.php" method="post">
+       Sorting Options:
+       <select id="filter_sort" name="sort" method="post">
+         <!-- <select id="filter_sort" name="sort" method="post" onchange="studentList.php"> -->
+         <option value="all">No order</option>
+         <option value="alphabet">Alphabetically</option>
+         <option value="year">Year</option>
+       </select>
+     </div>
+     <div id='filters'>
+       <!-- <form action="studentList.php" method="post"> -->
+       Filter options:
+       <select id="filter_level" name="students">
+         <option value="all">All Levels</option>
+         <option value="UG">Undergraduate</option>
+         <option value="GR">Graduate</option>
+         <option value="DR">Doctorate</option>
+       </select>
+     <!-- </form> -->
+     <!-- <form> -->
+       <input type="submit" value="Filter">
+     </form>
+     </div>
+_END;
   echo "<div id=data overflow-x:auto><h2 id='alumniHeader'>Alumni List</h2><table id='table' border='1'>
   <tr>
   <th>First Name</th>
@@ -62,41 +92,11 @@ $result = $conn->query($query);
     echo "<td>" . "<button type='button' class='profileButton'>Profile</button>";
     echo "</tr>";
   }
-  echo "</table></div>";
+  echo "</table></div><br></body></html>";
 
 
  ?>
-<!doctype html>
-<html>
-<head>
-</head>
-  <body>
-    <?php echo "message ".$message ?>
-    <div id='sorting'>
-      <form action="studentList.php" method="post">
-      Sorting Options:
-      <select id="filter_sort" name="sort" method="post">
-        <!-- <select id="filter_sort" name="sort" method="post" onchange="studentList.php"> -->
-        <option value="all">No order</option>
-        <option value="alphabet">Alphabetically</option>
-        <option value="year">Year</option>
-      </select>
-    </div>
-    <div id='filters'>
-      <!-- <form action="studentList.php" method="post"> -->
-      Filter options:
-      <select id="filter_level" name="students">
-        <option value="all">All Levels</option>
-        <option value="UG">Undergraduate</option>
-        <option value="GR">Graduate</option>
-        <option value="DR">Doctorate</option>
-      </select>
-    <!-- </form> -->
-    <!-- <form> -->
-      <input type="submit" value="Filter">
-    </form>
-    </div>
-    <!-- <script>
+     <!-- <script>
       $('select#filter_level').on('change', function(){
         alert('refresh');
         var filter = $('select#filter_level').val();
@@ -131,5 +131,3 @@ $result = $conn->query($query);
         });
     });
     </script> -->
-  </body>
-</html>
