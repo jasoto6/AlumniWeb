@@ -1,40 +1,69 @@
 <?php
 require_once 'header.php';
 require_once 'functions.php';
+$filterLevel="";
+$message = "";
 
 $conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 if ($conn->connect_error) {
      die("Connection failed: " . $conn->connect_error);
 }
+$query ="SELECT * FROM cs5339team14fa16.ALUMNI ORDER BY LastName";
 
-// $search = "";
 
-  echo "<div id=data overflow-x:auto><table id='table' border='1'>
+if(isset($_POST['students'])){
+  $filterLevel = $_POST['students'];
+  $message = $filterLevel;
+  if ($filterLevel != 'all') $query="SELECT * FROM cs5339team14fa16.ALUMNI WHERE LevelCode = '$filterLevel' ORDER BY LastName";
+  else $query ="SELECT * FROM cs5339team14fa16.ALUMNI ORDER BY LastName";
+}
+// if (isset($_POST['filter_level' == 'undergrad' && $_POST['filter_sort'] == 'alphabet']) ){
+
+// }
+// if ($POST['filter-level' == 'no_order' && $_POST['filter-level'] =='all'])
+//   $query("SELECT * FROM cs5339team14fa16.ALUMNI")
+// else {
+//   $query("SELECT * FROM cs5339team14fa16.ALUMNI")
+// }
+// elseif ($POST['filter-level' == 'no_order' && $_POST['filter-level'] =='all'] {
+//   $query("SELECT * FROM cs5339team14fa16.ALUMNI WHERE LevelCode = '".$filterLevel"'")
+// }
+
+$result = $conn->query($query);
+
+// if(isset($_GET['sorting']) && !empty($_GET['sorting']))
+// {
+//   if ($_GET['sorting'] == 'alphabet') $result. = "ORDER BY LastName");
+//   if ($_GET['sorting'] == 'degree') $result. = "ORDER BY Degree");
+// }
+
+  echo "<div id=data overflow-x:auto><h2 id='alumniHeader'>Alumni List</h2><table id='table' border='1'>
   <tr>
   <th>First Name</th>
   <th>Last Name</th>
+  <th>Academic Year</th>
+  <th>Term</th>
+  <th>Major</th>
+  <th>Level</th>
+  <th>Degree</th>
+  <th>Profile</th>
   </tr>";
 
-  $result = $conn->query("SELECT * FROM members");
+
   while ($row = $result->fetch_assoc()){
     echo "<tr>";
-    echo "<td>" . $row['user'] . "</td>";
+    echo "<td>" . $row['FirstName'] . "</td>";
+    echo "<td>" . $row['LastName'] . "</td>";
+    echo "<td>" . $row['AcademicYear'] . "</td>";
+    echo "<td>" . $row['Term'] . "</td>";
+    echo "<td>" . $row['Major'] . "</td>";
+    echo "<td>" . $row['LevelCode'] . "</td>";
+    echo "<td>" . $row['Degree'] . "</td>";
+    echo "<td>" . "<button type='button' class='profileButton'>Profile</button>";
     echo "</tr>";
   }
   echo "</table></div>";
 
-
-//
-//   if ($search == "")
-//   {
-//     $result = query("SELECT * FROM members");
-//   }
-//   else
-//   {
-//     $result = query("SELECT * FROM members WHERE user='$user'");
-//   }
-//   $num_rows=$result->num_rows;
-// }
 
  ?>
 <!doctype html>
@@ -42,35 +71,45 @@ if ($conn->connect_error) {
 <head>
 </head>
   <body>
-    <!-- <form action= 'studentList.php' method='post'>
-      <button type='button' name='searchButton'>Display Students</button>
-    </form> -->
-    <div id='filters'>
-      <!-- <h2>Filter options:</h2> -->
-      Filter Options:
-      <input type="checkbox" id="year" name="year">
-      <label for="year">by Year</label>
-      <input type="checkbox" id="major" name="major">
-      <label for="major">by Major</label>
-      <input type="checkbox" id="degree" name="degree">
-      <label for="degree">by Degree</label>
+    <?php echo "message ".$message ?>
+    <div id='sorting'>
+      <form action="studentList.php" method="post">
+      Sorting Options:
+      <select id="filter_sort" name="sort" method="post">
+        <!-- <select id="filter_sort" name="sort" method="post" onchange="studentList.php"> -->
+        <option value="all">No order</option>
+        <option value="alphabet">Alphabetically</option>
+        <option value="year">Year</option>
+      </select>
     </div>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script>
-    function getEmployeeFilterOptions(){
-      var opts = [];
-      $checkboxes.each(function(){
-        if(this.checked){
-          opts.push(this.name);
-        }
-      });
-      return opts;
-    }
-    </script>
-    <script>
+    <div id='filters'>
+      <!-- <form action="studentList.php" method="post"> -->
+      Filter options:
+      <select id="filter_level" name="students">
+        <option value="all">All Levels</option>
+        <option value="UG">Undergraduate</option>
+        <option value="GR">Graduate</option>
+        <option value="DR">Doctorate</option>
+      </select>
+    <!-- </form> -->
+    <!-- <form> -->
+      <input type="submit" value="Filter">
+    </form>
+    </div>
+    <!-- <script>
+      $('select#filter_level').on('change', function(){
+        alert('refresh');
+        var filter = $('select#filter_level').val();
+        $.post('studentList.php',{filter_level: filter_level}, function(data){
+          $('table#table').empty();
+          $('table#table').append(data);
+        })
+      })
+    </script> -->
+    <!-- <script>//
     $(document).ready(function(){
         $('#table').after('<div id="nav"></div>');
-        var rowsShown = 2;
+        var rowsShown = 20;
         var rowsTotal = $('#table tbody tr').length;
         var numPages = rowsTotal/rowsShown;
         for(i = 0;i < numPages;i++) {
@@ -91,6 +130,6 @@ if ($conn->connect_error) {
                     css('display','table-row').animate({opacity:1}, 300);
         });
     });
-    </script>
+    </script> -->
   </body>
 </html>
