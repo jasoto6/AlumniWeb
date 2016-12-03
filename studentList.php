@@ -18,7 +18,9 @@ if(isset($_POST['students'])){
   $filterLevel = $_POST['students'];
   $message = $filterLevel;
   if ($filterLevel != 'all') $query="SELECT * FROM ALUMNI WHERE LevelCode = '$filterLevel' ORDER BY LastName";
+  //if ($filterLevel != 'all') $query="SELECT * FROM cs5339team14fa16.ALUMNI WHERE LevelCode = '$filterLevel' ORDER BY LastName";
   else $query ="SELECT * FROM ALUMNI ORDER BY LastName";
+  //else $query ="SELECT * FROM cs5339team14fa16.ALUMNI ORDER BY LastName";
 }
 // if (isset($_POST['filter_level' == 'undergrad' && $_POST['filter_sort'] == 'alphabet']) ){
 
