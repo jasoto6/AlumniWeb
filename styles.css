@@ -151,9 +151,10 @@ tr:nth-child(even) {
 }
 
 #filters {
+  float: left;
   background-color: #e67e16;
   color: white;
-  position: relative;
+  position: static;
   width: 100%;
 
 }

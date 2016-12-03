@@ -46,7 +46,8 @@ if ($conn->connect_error) {
       <button type='button' name='searchButton'>Display Students</button>
     </form> -->
     <div id='filters'>
-      <h2>Filter options:</h2>
+      <!-- <h2>Filter options:</h2> -->
+      Filter Options:
       <input type="checkbox" id="year" name="year">
       <label for="year">by Year</label>
       <input type="checkbox" id="major" name="major">
