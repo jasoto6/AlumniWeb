@@ -1,11 +1,20 @@
 <?php //header.php
-  session_start();
+
+ini_set("session.cookie_lifetime","604800"); //an hour
+ini_set("session.cookie_httponly", 1);
+ini_set("session.use_only_cookies", 1);
+//ini_set("session.save_path", "sessions");
+
+session_name('UTEPAlumni');
+session_start();
 
   echo "<!DOCTYPE html>\n<html><head>";
 
   require_once 'functions.php';
 
   $userstr = ' (Guest)';
+
+
 
   if (isset($_SESSION['user']))
   {
@@ -25,9 +34,9 @@
   {
     echo "<ul class='menu'>" .
          "<li><a href='members.php?view=$user'>Home</a></li>" .
-         "<li><a href='members.php'>Members</a></li>"         .
-         "<li><a href='friends.php'>Friends</a></li>"         .
-         "<li><a href='messages.php'>Messages</a></li>"       .
+         "<li><a href='members.php'>Alumni</a></li>"         .
+//         "<li><a href='friends.php'>Friends</a></li>"         .
+         "<li><a href='messages.php'>Bulletins</a></li>"       .
          "<li><a href='profile.php'>Edit Profile</a></li>"    .
          "<li><a href='logout.php'>Log out</a></li></ul>";
   }

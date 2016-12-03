@@ -3,7 +3,7 @@
 
   if (!$loggedin) die();
 
-  echo "<div class='main'>";
+  echo "<br> <div class='main'>";
 
   if (isset($_GET['view']))
   {
