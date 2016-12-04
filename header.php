@@ -25,7 +25,7 @@
   echo "<title>$appname$userstr</title><link rel='stylesheet' " .
        "href='styles.css' type='text/css'>"                     .
        "</head><body> "  .
-       "<image src='UTEPAlumniBanner.jpg'> " .
+       "<img src='UTEPAlumniBanner.jpg'> " .
        "<div class='appname'>$appname$userstr</div>";
 
   if ($loggedin)

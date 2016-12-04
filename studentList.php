@@ -1,12 +1,12 @@
 <?php
 require_once 'header.php';
-require_once 'functions.php';
-// require_once 'database.php';
+//require_once 'functions.php';
+require_once 'database.php';
 $filterLevel="";
 $message = "";
 
-$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-// $conn = new mysqli($hn, $un, $pw, $db);
+//$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+$conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) {
      die("Connection failed: " . $conn->connect_error);
 }
@@ -67,11 +67,14 @@ $result = $conn->query($query);
      <!-- </form> -->
      <!-- <form> -->
 
-     </form>
+
      </div>
      <input type="submit" value="Filter" class="filterButton">
+     </form>
      </div>
 _END;
+
+
   echo "<div id=data overflow-x:auto><h2 id='alumniHeader'>Alumni List</h2><table id='table' border='1'>
   <tr>
   <th>First Name</th>
@@ -97,8 +100,8 @@ _END;
     echo "<td>" . "<button type='button' class='profileButton'>Profile</button>";
     echo "</tr>";
   }
-  echo "</table></div><br></body></html>";
-
+  //echo "</table></div><br></body></html>";
+  echo "</table></div>";
 
  ?>
      <!-- <script>
