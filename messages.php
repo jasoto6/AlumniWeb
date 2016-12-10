@@ -14,8 +14,7 @@
     {
       $pm   = substr(sanitizeString($_POST['pm']),0,1);
       $time = time();
-      queryMysql("INSERT INTO messages VALUES(NULL, '$user',
-        '$view', '$pm', $time, '$text')");
+      queryMysql("INSERT INTO messages (id, auth, pm, time, message) VALUES (NULL, '$user', '$pm', $time, '$text')");
     }
   }
 
@@ -57,9 +56,9 @@ _END;
       //if ($row['pm'] == 0 || $row['auth'] == $user || $row['recip'] == $user)
       //{
         echo date('M jS \'y g:ia:', $row['time']);
-        echo " <a href='messages.php?view=" . $row['auth'] . "'>" . $row['auth']. "</a> ";
+        echo " <a id='loginout' href='messages.php?view=" . $row['auth'] . "'>" . $row['auth']. "</a> ";
         echo "wrote: &quot;" . $row['message'] . "&quot; ";
-        
+
         //if ($row['pm'] == 0)
           //echo "wrote: &quot;" . $row['message'] . "&quot; ";
         //else

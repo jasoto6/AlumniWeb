@@ -1,29 +1,30 @@
 <?php
 require_once 'header.php';
 //require_once 'functions.php';
-require_once 'database.php';
+// require_once 'database.php';
 $filterLevel="";
+$sortLevel="";
 $message = "";
-
-//$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-$conn = new mysqli($hn, $un, $pw, $db);
+$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+// $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) {
      die("Connection failed: " . $conn->connect_error);
 }
 $query ="SELECT * FROM ALUMNI ORDER BY LastName";
 //$query ="SELECT * FROM cs5339team14fa16.ALUMNI ORDER BY LastName";
-
-
 if(isset($_POST['students'])){
   $filterLevel = $_POST['students'];
+  $sortLevel = $_POST['sort'];
   $message = $filterLevel;
-  if ($filterLevel != 'all') $query="SELECT * FROM ALUMNI WHERE LevelCode = '$filterLevel' ORDER BY LastName";
+  if ($filterLevel != 'all' && $sortLevel == 'lastName') $query="SELECT * FROM ALUMNI WHERE LevelCode = '$filterLevel' ORDER BY LastName";
   //if ($filterLevel != 'all') $query="SELECT * FROM cs5339team14fa16.ALUMNI WHERE LevelCode = '$filterLevel' ORDER BY LastName";
-  else $query ="SELECT * FROM ALUMNI ORDER BY LastName";
+  elseif ($filterLevel != 'all' && $sortLevel == 'year') $query="SELECT * FROM ALUMNI WHERE LevelCode = '$filterLevel' ORDER BY AcademicYear";
+  elseif ($filterLevel != 'all' && $sortLevel == 'all') $query="SELECT * FROM ALUMNI WHERE LevelCode = '$filterLevel'";
+  else $query ="SELECT * FROM ALUMNI";
+  // else $query ="SELECT * FROM ALUMNI ORDER BY LastName";
   //else $query ="SELECT * FROM cs5339team14fa16.ALUMNI ORDER BY LastName";
 }
 // if (isset($_POST['filter_level' == 'undergrad' && $_POST['filter_sort'] == 'alphabet']) ){
-
 // }
 // if ($POST['filter-level' == 'no_order' && $_POST['filter-level'] =='all'])
 //   $query("SELECT * FROM cs5339team14fa16.ALUMNI")
@@ -33,26 +34,23 @@ if(isset($_POST['students'])){
 // elseif ($POST['filter-level' == 'no_order' && $_POST['filter-level'] =='all'] {
 //   $query("SELECT * FROM cs5339team14fa16.ALUMNI WHERE LevelCode = '".$filterLevel"'")
 // }
-
 $result = $conn->query($query);
-
 // if(isset($_GET['sorting']) && !empty($_GET['sorting']))
 // {
 //   if ($_GET['sorting'] == 'alphabet') $result. = "ORDER BY LastName");
 //   if ($_GET['sorting'] == 'degree') $result. = "ORDER BY Degree");
 // }
-
   echo <<<_END
      <br>
      <div id="sort-filter">
      <div id='sorting'>
        <form action="studentList.php" method="post">
        Sorting Options:
-       <select id="filter_sort" name="sort" method="post">
+       <select id="filter_sort" name="sort">
          <!-- <select id="filter_sort" name="sort" method="post" onchange="studentList.php"> -->
          <option value="all">No order</option>
-         <option value="alphabet">Alphabetically</option>
-         <option value="year">Year</option>
+         <option value="lastName">by Last Name</option>
+         <option value="year">by Year</option>
        </select>
      </div>
      <div id='filters'>
@@ -66,15 +64,11 @@ $result = $conn->query($query);
        </select>
      <!-- </form> -->
      <!-- <form> -->
-
-
      </div>
-     <input type="submit" value="Filter" class="filterButton">
+     <input type="submit" value="Filter" id="filterButton">
      </form>
      </div>
 _END;
-
-
   echo "<div id=data overflow-x:auto><h2 id='alumniHeader'>Alumni List</h2><table id='table' border='1'>
   <tr>
   <th>First Name</th>
@@ -86,8 +80,6 @@ _END;
   <th>Degree</th>
   <th>Profile</th>
   </tr>";
-
-
   while ($row = $result->fetch_assoc()){
     echo "<tr>";
     echo "<td>" . $row['FirstName'] . "</td>";
@@ -97,12 +89,13 @@ _END;
     echo "<td>" . $row['Major'] . "</td>";
     echo "<td>" . $row['LevelCode'] . "</td>";
     echo "<td>" . $row['Degree'] . "</td>";
-    echo "<td>" . "<button type='button' class='profileButton'>Profile</button>";
+    $view = $row['Username'];
+    if($row['Username']!=null) echo "<td>" . "<button type='button' class='profileButton'><a href='members.php?view=$view'>Profile</a></button>";
+    else echo "<td>" . "<button type='button' class='profileButton'><a href='members.php?view=$view'>Profile</a></button>";
     echo "</tr>";
   }
   //echo "</table></div><br></body></html>";
   echo "</table></div>";
-
  ?>
      <!-- <script>
       $('select#filter_level').on('change', function(){
@@ -128,7 +121,6 @@ _END;
         $('#table tbody tr').slice(0, rowsShown).show();
         $('#data a:first').addClass('active');
         $('#data a').bind('click', function(){
-
             $('#data a').removeClass('active');
             $(this).addClass('active');
             var currPage = $(this).attr('rel');
@@ -139,3 +131,4 @@ _END;
         });
     });
     </script> -->
+    <?php include_once 'footer.php'; ?>

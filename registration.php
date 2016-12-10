@@ -8,19 +8,25 @@ $message = "Welcome to UTEP Alumni website, you need to register for full access
 $salt1 = "$)*)IH(!00ou291)";
 
 if (isset($_SESSION['loggedin'])) {
-  header('Location: mainpage.php');
+  header('Location: studentList.php');
   exit();
 }
 
-$username = $password = $firstName = $lastName = $year = $studentId = $email = $major = "";
+//$username = $password = $firstName = $lastName = $year = $studentId = $email = $major = "";
+$username = $password = $year = $studentId = $email = $major = "";
 if (isset($_POST['username'])) $username =fix_string($_POST['username']);
 if (isset($_POST['password'])) $password =fix_string($_POST['password']);
 if (isset($_POST['firstName'])) $firstName =fix_string($_POST['firstName']);
 if (isset($_POST['lastName'])) $lastName =fix_string($_POST['lastName']);
 if (isset($_POST['year'])) $year =fix_string($_POST['year']);
+if (isset($_POST['term'])) $term =fix_string($_POST['term']);
+if (isset($_POST['levelcode'])) $levelcode =fix_string($_POST['levelcode']);
 if (isset($_POST['studentId'])) $studentId =fix_string($_POST['studentId']);
 if (isset($_POST['email'])) $email =fix_string($_POST['email']);
 if (isset($_POST['major'])) $major =fix_string($_POST['major']);
+if (isset($_POST['degree'])) $degree =fix_string($_POST['degree']);
+if (isset($_POST['phoneno'])) $phoneno =fix_string($_POST['phoneno']);
+if (isset($_POST['briefbio'])) $briefbio =fix_string($_POST['briefbio']);
 
 
 if (isset($_POST['username']) || isset($_POST['password'])){
@@ -47,27 +53,45 @@ if ($fail == ""){
       die("Oops! Something is wrong. Please try again later.");
       exit();
     }
-    $query = "SELECT 1 FROM profiles WHERE user='$username'";
+    $query = "SELECT 1 FROM MYPROFILE WHERE Username='$username'";
     $result = mysqli_query($dbconn,$query);
     if (!$result) die($dbconn -> error);
     $rowcount= mysqli_num_rows($result);
 
     if ($rowcount == 1){
       $error = "Username already in use";
+      //$error = $firstName;
     } else {
-      $validation_query = "SELECT 1 FROM ALUMNI WHERE FirstName='$firstName' and LastName='$lastName'";
+      $validation_query = "SELECT 1 FROM ALUMNI WHERE FirstName='$firstName' and LastName='$lastName' and Major='$major' and id='$studentId'";
       $result = mysqli_query($dbconn,$validation_query);
       if (!$result) die($dbconn -> error);
       $rowcount= mysqli_num_rows($result);
 
       if ($rowcount == 1) {
         $message="Alumni found.<br>";
-        $error = "Alumni found.<br>";
-        $query1 = "INSERT INTO profiles (user, FirstName, LastName) VALUES ('$username', '$firstName', '$lastName'); ";
+        $error = "Alumni not found.<br>";
+          /*
+        $query1 = "INSERT INTO MYPROFILE (Username, FirstName, LastName,Major,Email,GraduationYear,Degree,Phoneno,BriefBio) VALUES ('$username', '$firstName', '$lastName','$major','$email','$year','$degree','$phoneno',$briefbio); ";
+        */
+
+        /*
+        $query1 = "INSERT INTO MYPROFILE (Username, FirstName, LastName,Email,Major,Degree,GraduationYear,Phoneno,BriefBio) VALUES ('$username', '$firstName', '$lastName','$email',$major','$degree','$year','$phoneno',$briefbio)";
+        */
+
+
+
+        $query1 = "INSERT INTO MYPROFILE (Username,Password,FirstName,LastName,Email,Major,Degree,GraduationYear,Phoneno,Briefbio, Term, LevelCode) VALUES ('".$username."','".$password."','".$firstName."','".$lastName."','".$email."','".$major."','".$degree."','".$year."','".$phoneno."','".$briefbio."', '".$term."', '".$levelcode."')";
+
         $query2 = "UPDATE ALUMNI SET Username='$username' WHERE id='$studentId'";
+
+        $query3 = "INSERT INTO members (user,pass) VALUES ('".$username."','".$password."')";
+
+
         $result1 = mysqli_query($dbconn,$query1);
         $result2 = mysqli_query($dbconn,$query2);
-        if($result1 || $result2){
+        $result3 = mysqli_query($dbconn,$query3);
+
+        if($result1 || $result2 || $result3){
                  $message = 'User Created Successfully. You can now <a href="login.php">Log In</a> with your credentials.';
                } else {
                  die($dbconn -> error);
@@ -211,14 +235,19 @@ function validatePassword(field)
 <br>
 <p><?php if ($error == "") {echo $message;} else {echo $error;} ?></p>
 <br>
-<p>Username: <input type="text" name="username"><br>
-Password: <input type="password" name="password"><br>
-FirstName: <input type="text" name="firstName"><br>
-LastName: <input type="text" name="lastName"><br>
-AcademicYear: <input type="text" name="year"><br>
-Student ID: <input type="text" name="studentId"><br>
-Email: <input type="text" name="email"><br>
-Major: <input type="text" name="major"><br></p>
+<p><span class='fieldname'>Username: </span><input type="text" name="username"><br>
+<span class='fieldname'>Password: </span><input type="password" name="password"><br>
+<span class='fieldname'>First Name: </span><input type="text" name="firstName"><br>
+<span class='fieldname'>Last Name: </span><input type="text" name="lastName"><br>
+<span class='fieldname'>Academic Year: </span><input type="text" name="year"><br>
+<span class='fieldname'>Term: </span><input type="text" name="term"><br>
+<span class='fieldname'>Level Code: </span><input type="text" name="levelcode"><br>
+<span class='fieldname'>Student ID: </span><input type="text" name="studentId"><br>
+<span class='fieldname'>Email: </span><input type="text" name="email"><br>
+<span class='fieldname'>Major: </span><input type="text" name="major"><br>
+<span class='fieldname'>Degree: </span><input type="text" name="degree"><br>
+<span class='fieldname'>Phone: </span><input type="text" name="phoneno"><br>
+<span class='fieldname'>Brief Bio: </span><input type="text" name="briefbio"><br></p>
 <p><input type="submit" value="Register" /></p>
 <br>
 </body>

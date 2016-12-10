@@ -14,9 +14,9 @@
 
   $userstr = ' (Guest)';
 
-  if (isset($_SESSION['user']))
+  if (isset($_SESSION['Username']))
   {
-    $user     = $_SESSION['user'];
+    $user     = $_SESSION['Username'];
     $loggedin = TRUE;
     $userstr  = " ($user)";
   }
@@ -42,7 +42,7 @@
     echo ("<ul class='menu'>" .
           "<li><a href='index.php'>Home</a></li>"                .
           "<li><a href='studentList.php'>Alumni</a></li>"         .
-          "<li><a href='signup.php'>Sign up</a></li>"            .
+          "<li><a href='registration.php'>Sign up</a></li>"            .
           "<li><a href='login.php'>Log in</a></li></ul>");
   }
 ?>

@@ -1,7 +1,6 @@
 <?php //members.php
   require_once 'header.php';
 
-  if (!$loggedin) die();
 
   echo "<br> <div class='main'>";
 
@@ -9,65 +8,34 @@
   {
     $view = sanitizeString($_GET['view']);
 
-    if ($view == $user) $name = "Your";
-    else                $name = "$view's";
+    $result = queryMysql("SELECT * FROM MYPROFILE WHERE Username='$view'");
 
-    echo "<h3>$name Profile</h3>";
-    showProfile($view);
-    echo "<a class='button' href='messages.php?view=$view'>" .
-         "View $name messages</a><br><br>";
+    $row = $result->fetch_assoc();
+
+    if (!$row['LastName'])
+
+    {
+      echo "<div class='profile'>The alumni hasn't registered yet.</div>";
+      exit();
+    }
+
+
+
+    echo "<h3>" . $row['LastName']. "'s Profile</h3>";
+
+    echo "<div class='profile'> First name: \t" . $row['FirstName'] . "</div><br>";
+    echo "<div class='profile'>Last name: \t" . $row['LastName'] . "</div><br>";
+    echo "<div class='profile'>Academic Year: \t" . $row['AcademicYear'] . "</div><br>";
+    echo "<div class='profile'>Term: \t" . $row['Term'] . "</div><br>";
+    echo "<div class='profile'>Major: \t" . $row['Major'] . "</div><br>";
+    echo "<div class='profile'>Level Code: \t" . $row['LevelCode'] . "</div><br>";
+    echo "<div class='profile'>Degree: \t" . $row['Degree'] . "</div><br>";
+    if (!$row['EmailPri']) echo "<div class='profile'>Email: \t" . $row['Email'] . "</div><br>";
+    if (!$row['PhonenoPri']) echo "<div class='profile'>Phone: \t" . $row['Phoneno'] . "</div><br>";
+    if (!$row['BriefBioPri']) echo "<div class='profile'>Brief Bio: \t" . $row['BriefBio'] . "</div><br>";
+
     die("</div></body></html>");
   }
 
-/*  if (isset($_GET['add']))
-  {
-    $add = sanitizeString($_GET['add']);
 
-    $result = queryMysql("SELECT * FROM friends WHERE user='$add' AND friend='$user'");
-    if (!$result->num_rows)
-      queryMysql("INSERT INTO friends VALUES ('$add', '$user')");
-  }
-  elseif (isset($_GET['remove']))
-  {
-    $remove = sanitizeString($_GET['remove']);
-    queryMysql("DELETE FROM friends WHERE user='$remove' AND friend='$user'");
-  }
-
-  $result = queryMysql("SELECT user FROM members ORDER BY user");
-  $num    = $result->num_rows;
-
-  echo "<h3>Other Members</h3><ul>";
-*/
-$result = queryMysql("SELECT user FROM members ORDER BY user");
-$num    = $result->num_rows;
-
-  for ($j = 0 ; $j < $num ; ++$j)
-  {
-    $row = $result->fetch_array(MYSQLI_ASSOC);
-    if ($row['user'] == $user) continue;
-
-    echo "<li><a href='members.php?view=" .
-      $row['user'] . "'>" . $row['user'] . "</a>";
-    $follow = "follow";
-
-    $result1 = queryMysql("SELECT * FROM friends WHERE
-      user='" . $row['user'] . "' AND friend='$user'");
-    $t1      = $result1->num_rows;
-    $result1 = queryMysql("SELECT * FROM friends WHERE
-      user='$user' AND friend='" . $row['user'] . "'");
-    $t2      = $result1->num_rows;
-}
-/*    if (($t1 + $t2) > 1) echo " &harr; is a mutual friend";
-    elseif ($t1)         echo " &larr; you are following";
-    elseif ($t2)       { echo " &rarr; is following you";
-      $follow = "recip"; }
-
-    if (!$t1) echo " [<a href='members.php?add="   .$row['user'] . "'>$follow</a>]";
-    else      echo " [<a href='members.php?remove=".$row['user'] . "'>drop</a>]";
-  }
-*/
 ?>
-
-    </ul></div>
-  </body>
-</html>

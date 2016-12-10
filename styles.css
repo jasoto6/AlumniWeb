@@ -1,6 +1,6 @@
 /* Example 26-13: styles.css */
 
-* {
+{
   font-family:verdana,sans-serif;
   font-size  :14pt;
 }
@@ -10,13 +10,15 @@ body {
   height: 100%;
   margin    :auto;
   background:#042e5e;
+  background-color:whitesmoke;
   /*border    :1px solid #888;*/
 }
 
 html {
+  position: relative;
   background:#fff
-  height: 100%;
   width:100%;
+  min-height:100%;
 }
 
 
@@ -38,6 +40,8 @@ img {
 li a, .button {
   text-decoration:none;
   background-color: rgb(223, 132, 25)
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 li a:hover, .button:hover {
@@ -45,19 +49,26 @@ li a:hover, .button:hover {
   color:white;
   padding-top: 5px;
   padding-bottom: 5px;
+  border-radius: 3px;
 }
 
 a:link, a:visited {
     color: white;
 }
 
+#loginout {
+    color: black;
+}
+
+
 .appname {
   text-align :right;
-  background :#e67e16;
+  background :#FF6600;
   color      :white;
   font-family:helvetica;
   font-size  :20pt;
   padding    :4px;
+  width: 100%;
 }
 
 .fieldname {
@@ -67,6 +78,7 @@ a:link, a:visited {
 
 .main {
   margin-left:40px;
+  color      :black;
 }
 
 .info {
@@ -80,7 +92,7 @@ a:link, a:visited {
 .menu li, .button {
   display           :inline;
   padding           :4px 6px;
-  background        :#e67e16;
+  background        :#FF6600;
 	color             :white;
   margin-right      :8px;
 
@@ -92,7 +104,7 @@ a:link, a:visited {
 }
 
 .menu, ul{
-  background-color: #e67e16;
+  background-color: #FF6600;
   margin: 0;
   padding: 5px;
   width: 100%;
@@ -133,6 +145,10 @@ height: 15%;*/
   color: black;
 }
 
+#data {
+  padding-bottom: 40px;
+}
+
 th, td {
   padding: 5px;
 }
@@ -152,19 +168,22 @@ tr:nth-child(even) {
 #sort-filter{
   width: 100%;
   background-color: #e67e16;
+  display: flex;
+  padding-top: 5px;
+  padding-bottom: 3px;
 }
 
 #filters {
-  /*float: left;*/
-  /*background-color: #e67e16;*/
   color: white;
   position: relative;
+  /*float: right;*/
+  padding-right: 10px;
 }
 
 #sorting {
   color: white;
   float: left;
-  position: static;
+  /*position: static;*/
   padding-right: 10px;
 }
 
@@ -176,18 +195,18 @@ margin-right: auto;
 
 #welcome {
   width: 100%;
-  color: white;
+  color: black;
   text-align: center;
   /*margin-left: auto;*/
   margin-right: auto;
 }
 
 #alumniHeader {
-  color: white;
+  color: black;
   text-align: center;
 }
 
-.filterButton {
+#filterButton {
   background-color: #042e5e;
   color: white;
   padding           :4px 6px;
@@ -195,7 +214,7 @@ margin-right: auto;
   position: relative;
 }
 
-.filterButton:hover{
+#filterButton:hover{
   background-color: #0857b1;
 }
 
@@ -213,7 +232,7 @@ margin-right: auto;
 }
 
 .submitButton {
-  background-color:#e67e16;
+  background-color:#FF6600;
   color: white;
   border: none;
 }
@@ -224,5 +243,45 @@ margin-right: auto;
 }
 
 h3{
+  color: black;
+}
+
+p{
+  color: black;
+}
+
+h1{
+  color: black;
+  padding-left: 20px;
+}
+
+input[type=submit]{
+  background-color:#FF6600;
   color: white;
+  border: none;
+}
+input[type=submit]:hover{
+  background-color:#d69a5d;
+  color: white;
+  border: none;
+}
+
+#footer{
+  text-align: center;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  font-size: 15px;
+  color: white;
+  background-color: #FF6600;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.info {
+  color: white;
+}
+
+form {
+  padding-left: 20px;
 }
